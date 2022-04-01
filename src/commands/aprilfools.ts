@@ -3,6 +3,7 @@ import {
   InteractionResponseTypes,
   transformEmbed,
 } from "../../deps.ts";
+import { validatePermissions } from "https://deno.land/x/discordeno@13.0.0-rc34/plugins/permissions/mod.ts";
 import { createCommand } from "./mod.ts";
 
 import { Image } from "https://deno.land/x/imagescript@v1.2.12/mod.ts";
@@ -14,6 +15,33 @@ createCommand({
   type: ApplicationCommandTypes.ChatInput,
   scope: "Guild",
   execute: async (bot, interaction) => {
+    const memberPermissions = interaction.member?.permissions;
+
+    if (!memberPermissions)
+      return bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            content: "Could not determine your permissions. Please try again.",
+          },
+        }
+      );
+
+    if (!validatePermissions(memberPermissions, ["MANAGE_GUILD"]))
+      return bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            content:
+              'You don\'t have enough permissions. Please ensure you have the "Manage Server" or "Administrator" permissions.',
+          },
+        }
+      );
+
     const guildId = interaction.guildId;
 
     if (!guildId)
