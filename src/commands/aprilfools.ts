@@ -66,7 +66,8 @@ createCommand({
         {
           type: InteractionResponseTypes.ChannelMessageWithSource,
           data: {
-            content: "Could not retrieve icon. Please try again.",
+            content:
+              "Could not retrieve server image. This is likely due to your server not having one. Please add one and try again.",
           },
         }
       );
