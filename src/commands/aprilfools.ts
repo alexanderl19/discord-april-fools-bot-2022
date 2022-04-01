@@ -13,7 +13,7 @@ createCommand({
   name: "aprilfools",
   description: "Adds a notification icon to your server's image!",
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Guild",
+  scope: "Global",
   execute: async (bot, interaction) => {
     const memberPermissions = interaction.member?.permissions;
 
