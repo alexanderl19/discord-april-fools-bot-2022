@@ -38,13 +38,7 @@ enablePermissionsPlugin(bot);
 
 bot.gateway.presence = {
   status: "online",
-  activities: [
-    {
-      name: "Discordeno is Best Lib",
-      type: ActivityTypes.Game,
-      createdAt: Date.now(),
-    },
-  ],
+  activities: [],
 };
 
 await startBot(bot);
